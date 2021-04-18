@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thesis.android_challenge_w4">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -24,5 +25,7 @@
         <activity android:name=".activity.signup.SignUpActivity" android:noHistory="true" />
         <activity android:name=".activity.signin.SignInActivity"/>
         <activity android:name=".activity.profile.ProfileActivity"/>
+        <activity android:name=".activity.restaurant_list.RestaurantListActivity"/>
+
     </application>
 </manifest>
