@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.thesis.android_challenge_w4.databinding.ActivitySignInBinding
 import com.thesis.android_challenge_w4.R
 import com.thesis.android_challenge_w4.activity.profile.ProfileActivity
+import com.thesis.android_challenge_w4.activity.restaurant_list.RestaurantListActivity
 import com.thesis.android_challenge_w4.activity.signup.SignUpActivity
 import com.thesis.android_challenge_w4.model.User
 
@@ -55,7 +56,7 @@ class SignInActivity : AppCompatActivity() {
         viewModel.isSignInSucceed.observe(this, Observer { user ->
             user?.let {
                 showToastMessage("Sign in Successful")
-                startProfileActivity(user)
+                startRestaurantListActivity()
             }
 
         })
@@ -73,6 +74,11 @@ class SignInActivity : AppCompatActivity() {
         bundle.putParcelable(USER_KEY, user)
         val intent = Intent(this@SignInActivity, ProfileActivity::class.java)
         intent.putExtras(bundle)
+        startActivity(intent)
+    }
+
+    private fun startRestaurantListActivity() {
+        val intent = Intent(this@SignInActivity, RestaurantListActivity::class.java)
         startActivity(intent)
     }
 
