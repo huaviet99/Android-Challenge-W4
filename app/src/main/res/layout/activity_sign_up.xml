@@ -84,6 +84,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_full_name"
                     android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:inputType="text"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sofia_pro_medium"
                     android:hint="@string/activity_sign_up_full_name_hint"
@@ -106,6 +108,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_email"
                     android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:inputType="text"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sofia_pro_medium"
                     android:hint="@string/activity_sign_up_email_hint"
@@ -131,6 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sofia_pro_medium"
+                    android:maxLines="1"
                     android:hint="@string/activity_sign_up_password"
                     android:inputType="textPassword"
                     android:text="@={signUpViewModel.user.password}" />

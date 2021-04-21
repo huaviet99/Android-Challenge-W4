@@ -9,10 +9,12 @@
             type="com.thesis.android_challenge_w4.activity.signin.SignInViewModel" />
 
     </data>
+
     <androidx.core.widget.NestedScrollView
-        android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -85,9 +87,11 @@
                     android:id="@+id/edt_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={signInViewModel.user.email}"
                     android:fontFamily="@font/sofia_pro_medium"
-                    android:hint="@string/activity_sign_in_email_hint" />
+                    android:hint="@string/activity_sign_in_email_hint"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:text="@={signInViewModel.user.email}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,10 +111,12 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edt_password"
                     android:layout_width="match_parent"
-                    android:text="@={signInViewModel.user.password}"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sofia_pro_medium"
-                    android:hint="@string/activity_sign_in_password" />
+                    android:hint="@string/activity_sign_in_password"
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:text="@={signInViewModel.user.password}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,12 +141,12 @@
                 android:layout_marginTop="@dimen/distance_10dp"
                 android:background="@drawable/rounded_button"
                 android:fontFamily="@font/sofia_pro_medium"
+                android:onClick="@{()->signInViewModel.login()}"
                 android:paddingHorizontal="@dimen/distance_90dp"
                 android:paddingVertical="@dimen/distance_10dp"
                 android:text="@string/activity_sign_in_login_button"
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_15sp"
-                android:onClick="@{()->signInViewModel.login()}"
                 app:backgroundTint="@color/orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

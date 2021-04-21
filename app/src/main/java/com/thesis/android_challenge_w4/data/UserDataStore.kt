@@ -5,13 +5,13 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
-class DataStore private constructor() {
+class UserDataStore private constructor() {
     private val userList = ArrayList<User>()
     private lateinit var loginCallback: LoginCallback
     private lateinit var signUpCallback: SignUpCallback
 
     companion object {
-        val instance = DataStore()
+        val instance = UserDataStore()
 
         const val FULL_NAME_FIELD = 0
         const val EMAIL_FIELD = 1
@@ -45,7 +45,7 @@ class DataStore private constructor() {
                 return
             }
         }
-        loginCallback.onFailed("Cannot find any user")
+        loginCallback.onFailed("Please check your email or password")
     }
 
     fun getUserByEmail(email: String): User?{
@@ -75,17 +75,19 @@ class DataStore private constructor() {
         }
     }
 
-    fun isInvalidEmail(email: String): Boolean {
+    private fun isInvalidEmail(email: String): Boolean {
         val matcher: Matcher = Pattern.compile("[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@gmail.com").matcher(email)
         return !matcher.matches()
     }
-    fun isInvalidPassword(password: String): Boolean{
+
+    private fun isInvalidPassword(password: String): Boolean{
         val matcher: Matcher =
             Pattern.compile("((?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#\$%^&*()]).{8,})").matcher(
                 password
             )
         return !matcher.matches()
     }
+
     fun setSignUpCallback(signUpCallback: SignUpCallback) {
         this.signUpCallback = signUpCallback
     }

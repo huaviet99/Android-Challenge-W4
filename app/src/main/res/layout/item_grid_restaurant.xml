@@ -12,14 +12,25 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:paddingBottom="10dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:theme="@style/ProgressBarTheme"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/img_restaurant"
+                app:layout_constraintEnd_toEndOf="@+id/img_restaurant"
+                app:layout_constraintStart_toStartOf="@+id/img_restaurant"
+                app:layout_constraintTop_toTopOf="@+id/img_restaurant" />
+
             <ImageView
                 android:id="@+id/img_restaurant"
                 android:layout_width="match_parent"
-android:scaleType="centerCrop"
                 android:layout_height="100dp"
-                android:src="@drawable/ic_launcher_background"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -3,7 +3,7 @@ package com.thesis.android_challenge_w4.activity.signin
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.thesis.android_challenge_w4.model.User
-import com.thesis.android_challenge_w4.data.DataStore
+import com.thesis.android_challenge_w4.data.UserDataStore
 
 class SignInViewModel : ViewModel() {
     val user = MutableLiveData<User>()
@@ -15,7 +15,7 @@ class SignInViewModel : ViewModel() {
     }
 
     fun login(){
-        val dataStore = DataStore.instance
+        val dataStore = UserDataStore.instance
         dataStore.setLoginCallback(loginCallback)
         dataStore.login(user.value!!.email,user.value!!.password)
     }
@@ -25,7 +25,7 @@ class SignInViewModel : ViewModel() {
         errorMessage.value = null
     }
 
-    private val loginCallback  = object : DataStore.LoginCallback{
+    private val loginCallback  = object : UserDataStore.LoginCallback{
         override fun onSucceed(user: User) {
             this@SignInViewModel.isSignInSucceed.value = user
         }

@@ -11,6 +11,17 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <ProgressBar
+                android:theme="@style/ProgressBarTheme"
+                android:visibility="visible"
+                android:id="@+id/progress_bar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/img_restaurant"
+                app:layout_constraintEnd_toEndOf="@+id/img_restaurant"
+                app:layout_constraintStart_toStartOf="@+id/img_restaurant"
+                app:layout_constraintTop_toTopOf="@+id/img_restaurant" />
             <ImageView
                 android:id="@+id/img_restaurant"
                 android:layout_width="92dp"

@@ -6,31 +6,45 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thesis.android_challenge_w4.R
+import com.thesis.android_challenge_w4.activity.profile.ProfileViewModel
 import com.thesis.android_challenge_w4.data.getRestaurantList
+import com.thesis.android_challenge_w4.databinding.ActivityProfileBinding
+import com.thesis.android_challenge_w4.databinding.ActivityRestaurantListBinding
+import com.thesis.android_challenge_w4.model.Restaurant
 import kotlinx.android.synthetic.main.activity_restaurant_list.*
 
 
 class RestaurantListActivity : AppCompatActivity(){
     private lateinit var restaurantAdapter: RestaurantAdapter
     private lateinit var menu: Menu
+    private lateinit var viewModel: RestaurantListViewModel
+    private lateinit var binding: ActivityRestaurantListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_restaurant_list)
-        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
+        setupViewModelBinding()
+        setupToolbar()
         setupRecyclerView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        restaurantAdapter.listener = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -42,13 +56,13 @@ class RestaurantListActivity : AppCompatActivity(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.item_list_switch -> {
-                Log.d("Test","Clicked")
-                val isSwitched: Boolean = restaurantAdapter.toggleItemViewType()
-                if(isSwitched){
-                    rv_restaurant_list.layoutManager = LinearLayoutManager(this)
+                val isLinearSwitched: Boolean = restaurantAdapter.toggleItemViewType()
+
+                if(isLinearSwitched){
+                    binding.rvRestaurantList.layoutManager = LinearLayoutManager(this)
                     menu[0].icon = ContextCompat.getDrawable(this,R.drawable.ic_grid)
                 } else {
-                    rv_restaurant_list.layoutManager = GridLayoutManager(this,2)
+                    binding.rvRestaurantList.layoutManager = GridLayoutManager(this,2)
                     menu[0].icon = ContextCompat.getDrawable(this,R.drawable.ic_linear)
 
                 }
@@ -57,17 +71,40 @@ class RestaurantListActivity : AppCompatActivity(){
         return true
     }
 
-    private fun setupRecyclerView(){
-        val linearLayoutManager = LinearLayoutManager(this)
-        restaurantAdapter = RestaurantAdapter()
-        restaurantAdapter.submitList(getRestaurantList())
-        rv_restaurant_list.apply {
-            layoutManager = linearLayoutManager
-            adapter = restaurantAdapter
-        }
+    private fun setupViewModelBinding() {
+        viewModel = ViewModelProvider(this).get(RestaurantListViewModel::class.java)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_restaurant_list)
+        binding.lifecycleOwner = this
+        binding.restaurantListViewModel = viewModel
+
+        viewModel.fetchRestaurantList().observe(this, Observer {
+            if(it.isNotEmpty()){
+                restaurantAdapter.submitList(it)
+            } else {
+                showToastMessage("Can't find any restaurant")
+            }
+        })
+
     }
 
-    private fun switchIcon(){
 
+    private fun setupToolbar(){
+        val toolbar: Toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = "Restaurants"
+    }
+
+    private fun setupRecyclerView(){
+        restaurantAdapter = RestaurantAdapter()
+        restaurantAdapter.listener = object : RestaurantAdapter.RestaurantAdapterListener {
+            override fun onItemClicked(restaurant: Restaurant) {
+                showToastMessage(restaurant.name)
+            }
+        }
+        binding.rvRestaurantList.adapter = restaurantAdapter
+    }
+
+    private fun showToastMessage(message:String){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
     }
 }

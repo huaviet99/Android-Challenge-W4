@@ -25,7 +25,7 @@
         <activity android:name=".activity.signup.SignUpActivity" android:noHistory="true" />
         <activity android:name=".activity.signin.SignInActivity"/>
         <activity android:name=".activity.profile.ProfileActivity"/>
-        <activity android:name=".activity.restaurant_list.RestaurantListActivity"/>
+        <activity android:name=".activity.restaurant_list.RestaurantListActivity" android:configChanges="orientation|screenSize"/>
 
     </application>
 </manifest>

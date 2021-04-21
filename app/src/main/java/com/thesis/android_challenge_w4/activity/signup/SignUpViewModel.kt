@@ -3,7 +3,7 @@ package com.thesis.android_challenge_w4.activity.signup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.thesis.android_challenge_w4.model.User
-import com.thesis.android_challenge_w4.data.DataStore
+import com.thesis.android_challenge_w4.data.UserDataStore
 
 class SignUpViewModel : ViewModel() {
     val user = MutableLiveData<User>()
@@ -15,7 +15,7 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun signUp() {
-        val dataStore = DataStore.instance
+        val dataStore = UserDataStore.instance
         dataStore.setSignUpCallback(signUpCallback)
         dataStore.signUp(user.value!!.fullName, user.value!!.email, user.value!!.password)
     }
@@ -27,7 +27,7 @@ class SignUpViewModel : ViewModel() {
 
 
 
-    private val signUpCallback  = object : DataStore.SignUpCallback{
+    private val signUpCallback  = object : UserDataStore.SignUpCallback{
         override fun onSucceed() {
             isSignUpSucceed.value = true
         }
